@@ -20,18 +20,11 @@ Stack: **Next.js 16 (App Router) + TypeScript** en **Vercel**, **Supabase** (Pos
 
 Proyecto `adbuilder` (`qbgequcowhkbcltifvye`, sa-east-1). Tablas:
 
-- `members` — emails con acceso. Registrarse no alcanza: el email tiene que estar acá.
 - `settings` — una fila: director, matrícula, sede por defecto, modelo.
 - `photos` — biblioteca de fotos (archivo en el bucket público `photos`).
 - `ads` — cada anuncio y sus refinamientos (`parent_id`).
 
-Todas con RLS: solo usuarios autenticados que figuran en `members`.
-
-**Dar acceso a alguien**
-1. Supabase → Authentication → Users → *Add user* (email + contraseña, marcar *Auto confirm*).
-2. SQL: `insert into members (email) values ('persona@ejemplo.com');`
-
-Recomendado: Authentication → Sign In / Providers → desactivar *Allow new users to sign up*.
+**Sin login**: la app no pide credenciales. Cualquiera con la URL puede usarla; las políticas RLS dan acceso completo a la publishable key.
 
 ## Variables de entorno
 
