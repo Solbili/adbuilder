@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "smile-lab/ad-spec.json",
+  "title": "AdSpec",
+  "description": "Output contract of the generator. Pass as the input_schema of a forced tool call (tool name: create_ad). The renderer turns an AdSpec into AdTemplate renders; the server validates it before returning.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "platform", "treatment", "layout", "formats", "photo", "slots", "frames", "legal", "meta", "google", "rationale"],
+  "properties": {
+    "kind": { "enum": ["feed", "story", "reel", "google", "pmax"], "description": "What the user asked for. pmax = full Google Performance Max set." },
+    "platform": { "enum": ["meta", "google"] },
+    "objective": { "enum": ["volumen", "consideracion", "segmento"], "description": "volumen → veil/split, consideracion → flat, segmento → dark (suggestion, not a rule)" },
+    "treatment": { "enum": ["Limpieza dental", "Endodoncia", "Caries y restauraciones", "Ortodoncia", "Blanqueamiento", "Odontopediatría", "General"] },
+    "layout": { "enum": ["veil", "split", "flat", "dark"] },
+    "formats": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "enum": ["meta-feed-1x1", "meta-feed-4x5", "meta-stories", "meta-reels", "google-display-191x1", "google-display-1x1", "google-display-4x5", "google-demandgen-9x16", "google-logo-1x1", "google-logo-4x1"] }
+    },
+    "photo": {
+      "type": "object", "additionalProperties": false, "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "description": "MUST be an id from the photo library passed in the prompt. Never invent." },
+        "focal": { "type": "string", "pattern": "^\\d{1,3}% \\d{1,3}%$", "description": "Optional override; default = library focal point" }
+      }
+    },
+    "slots": {
+      "type": "object", "additionalProperties": false, "required": ["kicker", "cta", "sede"],
+      "properties": {
+        "kicker": { "type": "string", "maxLength": 28, "description": "{tratamiento} — usually the treatment name" },
+        "cta": { "enum": ["Sacar turno", "Consultar por WhatsApp", "Ver tratamientos"] },
+        "sede": { "enum": ["ambas", "general-paz", "nueva-cordoba"] }
+      }
+    },
+    "frames": {
+      "type": "array", "minItems": 1, "maxItems": 5,
+      "description": "1 frame for static formats. Reels: 3–5 scenes (hook, info, CTA). Same layout and photo for all scenes in v1.",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["titular"],
+        "properties": {
+          "titular": { "type": "string", "maxLength": 60, "description": "{titular}. Wrap exactly ONE word in *asterisks* for the italic teal word. No '!'." },
+          "cuerpo": { "type": "string", "maxLength": 90, "description": "Optional supporting line. Hidden on 1.91:1." },
+          "durationSec": { "type": "number", "minimum": 1.5, "maximum": 6 }
+        }
+      }
+    },
+    "legal": {
+      "type": "object", "additionalProperties": false, "required": ["condiciones"],
+      "properties": { "condiciones": { "type": "string", "maxLength": 160, "description": "Validity + conditions. REQUIRED (non-empty) if any copy mentions a price, discount or promo. Director/matrícula come from settings, not from the model." } }
+    },
+    "meta": {
+      "type": "object", "additionalProperties": false, "required": ["primaryText", "headline", "description", "callToAction"],
+      "properties": {
+        "primaryText": { "type": "string", "maxLength": 125 },
+        "headline": { "type": "string", "maxLength": 40 },
+        "description": { "type": "string", "maxLength": 30 },
+        "callToAction": { "enum": ["WHATSAPP_MESSAGE", "LEARN_MORE", "CONTACT_US", "BOOK_NOW"], "description": "Meta CTA button enum. Verify against the current Marketing API before shipping." }
+      }
+    },
+    "reel": {
+      "type": ["object", "null"], "additionalProperties": false,
+      "properties": {
+        "caption": { "type": "string", "maxLength": 2200 },
+        "audio": { "type": "string", "description": "Suggestion only, e.g. 'instrumental suave, sin voz'" }
+      }
+    },
+    "google": {
+      "type": "object", "additionalProperties": false, "required": ["headlines", "longHeadline", "descriptions"],
+      "properties": {
+        "headlines": { "type": "array", "minItems": 1, "maxItems": 5, "items": { "type": "string", "maxLength": 30 } },
+        "longHeadline": { "type": "string", "maxLength": 90 },
+        "descriptions": { "type": "array", "minItems": 1, "maxItems": 5, "items": { "type": "string", "maxLength": 90 } }
+      }
+    },
+    "rationale": { "type": "string", "maxLength": 240, "description": "One sentence shown to the user: what was understood and why this layout." }
+  }
+}

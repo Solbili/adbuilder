@@ -1,0 +1,52 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Smile Lab · Anuncios de ejemplo</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script><script src="../../assets/ds-fallback.js"></script>
+<style>html,body{margin:0}body{background:var(--bg);font-family:var(--font-text);color:var(--ink)}*{box-sizing:border-box}a{color:var(--accent-ink)}a:hover{color:var(--ink)}</style></head><body><div id="root"></div>
+<script type="text/babel" src="kit.jsx"></script>
+<script type="text/babel">
+const LIMITS = { texto: [125, "Meta · texto primario"], titulo: [40, "Meta · título"], gtitulo: [30, "Google · título"], largo: [90, "Google · título largo"], descripcion: [90, "Google · descripción"] };
+function Copy({ k, text }) {
+  const [max, label] = LIMITS[k];
+  const over = text.length > max;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 4, padding: "12px 0", borderTop: "1px solid var(--line)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "var(--muted2)" }}><span>{label}</span><span style={{ fontWeight: 600, color: over ? "var(--ink)" : "var(--accent-ink)" }}>{text.length} / {max}{over ? " · excede" : ""}</span></div>
+      <div style={{ fontSize: 15, lineHeight: 1.5, color: "var(--ink)" }}>{text}</div>
+    </div>
+  );
+}
+function Example({ id }) {
+  const p = PRESETS[id];
+  return (
+    <section data-screen-label={p.name} style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 28, padding: 32, display: "grid", gridTemplateColumns: "minmax(0,1fr) 340px", gap: 32 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 20, minWidth: 0 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <DS.Kicker size={12}>Campaña de {p.campana.toLowerCase()} · layout {p.layout}</DS.Kicker>
+          <DS.Headline level={2} size={36} text={p.name} />
+        </div>
+        <div style={{ display: "flex", gap: 20, alignItems: "flex-end", flexWrap: "wrap" }}>
+          {p.formats.map(fk => { const f = DS.AD_FORMATS[fk]; const k = Math.min(400 / f.h, 440 / f.w); return (
+            <div key={fk} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <Scaled format={fk} k={k}><DS.AdTemplate format={fk} layout={p.layout} {...p.slots} director="Dra. Nombre Apellido" matricula="0000" /></Scaled>
+              <span style={{ fontSize: 12, color: "var(--muted2)" }}>{f.label} · {f.w}×{f.h}</span>
+            </div>); })}
+        </div>
+      </div>
+      <div>
+        <Copy k="texto" text={p.meta.texto} /><Copy k="titulo" text={p.meta.titulo} />
+        <Copy k="gtitulo" text={p.google.titulo} /><Copy k="largo" text={p.google.largo} /><Copy k="descripcion" text={p.google.descripcion} />
+      </div>
+    </section>
+  );
+}
+function App() {
+  return (<div><KitNav current="examples.html" />
+    <div style={{ padding: 32, display: "flex", flexDirection: "column", gap: 28, maxWidth: 1400 }}>
+      <Example id="limpieza" /><Example id="ortodoncia" /><Example id="pediatria" />
+      <p style={{ margin: 0, fontSize: 13, color: "var(--muted2)" }}>Director y matrícula son placeholders: confirmá el texto legal con el Colegio Odontológico de Córdoba antes de publicar.</p>
+    </div></div>);
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script></body></html>

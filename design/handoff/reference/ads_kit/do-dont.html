@@ -1,0 +1,47 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Smile Lab · Do / Don't</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script><script src="../../assets/ds-fallback.js"></script>
+<style>html,body{margin:0}body{background:var(--bg);font-family:var(--font-text);color:var(--ink)}*{box-sizing:border-box}a{color:var(--accent-ink)}a:hover{color:var(--ink)}</style></head><body><div id="root"></div>
+<script type="text/babel" src="kit.jsx"></script>
+<script type="text/babel">
+const T = { padding: 24, borderRadius: 18, height: 190, display: "flex", flexDirection: "column", justifyContent: "flex-end", gap: 14, position: "relative", overflow: "hidden" };
+const H = (extra) => ({ fontFamily: "var(--font-display)", fontSize: 34, lineHeight: 1.08, letterSpacing: "-0.02em", margin: 0, ...extra });
+const BUSY = "repeating-linear-gradient(45deg,#cfe6e6 0 8px,#a9d3d5 8px 16px,#bfdfe0 16px 22px)";
+const PAIRS = [
+  { t: "Texto sobre #8cc3c8", note: "Blanco sobre accent da 1.9:1. Sobre accent va #1b2c31 (7.4:1).",
+    dont: <div style={{ ...T, background: "var(--accent)" }}><span style={{ alignSelf: "flex-start", borderRadius: 999, padding: "15px 26px", background: "var(--accent-hover)", color: "#fff", font: "600 15px/1 var(--font-text)" }}>Sacar turno</span><span style={{ color: "#fff", fontSize: 15 }}>Texto blanco sobre accent</span></div>,
+    do: <div style={{ ...T, background: "var(--accent)" }}><DS.Button size="web" variant="dark" style={{ alignSelf: "flex-start" }}>Sacar turno</DS.Button><span style={{ color: "var(--on-accent)", fontSize: 15 }}>Texto #1b2c31 sobre accent</span></div> },
+  { t: "Titulares en Bold", note: "La firma es Jost Light. Para ganar lectura, subí el cuerpo.",
+    dont: <div style={{ ...T, background: "var(--bg)", border: "1px solid var(--line)" }}><p style={H({ fontWeight: 700, letterSpacing: 0, color: "var(--ink)" })}>Sacá turno por WhatsApp</p></div>,
+    do: <div style={{ ...T, background: "var(--bg)", border: "1px solid var(--line)" }}><DS.Headline size={44} text="Sacá turno por *WhatsApp*" /></div> },
+  { t: "brand como fondo", note: "#327180 y #afd1d3 son del logo. Los bloques usan la familia accent.",
+    dont: <div style={{ ...T, background: "var(--brand)" }}><p style={H({ fontWeight: 300, color: "#fff" })}>Ortodoncia en Córdoba</p></div>,
+    do: <div style={{ ...T, background: "var(--accent)" }}><DS.Headline size={34} tone="accent" text="Ortodoncia en Córdoba" /></div> },
+  { t: "Logo sobre foto con detalle", note: "Siempre sobre barra o tarjeta #ffffff / #f6fafa.",
+    dont: <div style={{ ...T, background: BUSY }}><DS.Logo size={48} /></div>,
+    do: <div style={{ ...T, background: BUSY }}><div style={{ background: "var(--bg)", borderRadius: 14, padding: "14px 18px", alignSelf: "flex-start" }}><DS.Logo size={48} /></div></div> },
+  { t: "Más de una itálica", note: "Una palabra en itálica teal por pieza, nunca dos.",
+    dont: <div style={{ ...T, background: "var(--bg)", border: "1px solid var(--line)" }}><p style={H({ fontWeight: 300, color: "var(--ink)" })}>Una <em style={{ color: "var(--accent-italic)" }}>sonrisa</em> clara y <em style={{ color: "var(--accent-italic)" }}>cercana</em></p></div>,
+    do: <div style={{ ...T, background: "var(--bg)", border: "1px solid var(--line)" }}><DS.Headline size={34} text="Odontología clara y *cercana*" /></div> },
+  { t: "Texto sin velo sobre foto", note: "Velo #22343a al 35–55% o tarjeta sólida.",
+    dont: <div style={{ ...T, background: BUSY }}><p style={H({ fontWeight: 300, color: "#fff" })}>Limpieza dental</p></div>,
+    do: <div style={{ ...T, background: BUSY }}><div style={{ position: "absolute", inset: 0, background: "var(--veil)" }}></div><div style={{ position: "relative" }}><DS.Headline size={34} tone="photo" text="Limpieza dental" /></div></div> },
+];
+function Tag({ ok }) { return <span style={{ font: "600 12px var(--font-text)", letterSpacing: ".06em", textTransform: "uppercase", color: ok ? "var(--accent-ink)" : "var(--ink)" }}>{ok ? "Do" : "Don't"}</span>; }
+function App() {
+  return (<div><KitNav current="do-dont.html" />
+    <div style={{ padding: 32, display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,520px),1fr))", gap: 24 }}>
+      {PAIRS.map(p => (
+        <div key={p.t} style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 22, padding: 20, display: "flex", flexDirection: "column", gap: 14 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}><div style={{ fontFamily: "var(--font-display)", fontSize: 20 }}>{p.t}</div><div style={{ fontSize: 13, color: "var(--body)" }}>{p.note}</div></div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}><Tag ok={false} /><div style={{ position: "relative" }}>{p.dont}<span style={{ position: "absolute", top: 10, right: 10, width: 26, height: 26, borderRadius: 999, background: "var(--dark)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>✕</span></div></div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}><Tag ok /><div>{p.do}</div></div>
+          </div>
+        </div>))}
+    </div></div>);
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script></body></html>

@@ -1,0 +1,17 @@
+import React from "react";
+import { Photo } from "./Photo.jsx.txt";
+import { Kicker } from "../core/Kicker.jsx.txt";
+
+/** White card: photo, optional kicker, treatment name (H3) and one-line description. */
+export function TreatmentCard({ tratamiento = "{tratamiento}", descripcion, kicker, foto, focal, s = 1, style }) {
+  return (
+    <div style={{ background: "var(--surface)", border: "1px solid var(--line)", borderRadius: 38 * s, overflow: "hidden", display: "flex", flexDirection: "column", ...style }}>
+      <Photo src={foto} focal={focal} s={s} style={{ aspectRatio: "16 / 10", width: "100%" }} />
+      <div style={{ padding: 32 * s, display: "flex", flexDirection: "column", gap: 14 * s }}>
+        {kicker && <Kicker s={s * 0.85}>{kicker}</Kicker>}
+        <div style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: 40 * s, lineHeight: 1.25, color: "var(--ink)" }}>{tratamiento}</div>
+        {descripcion && <p style={{ margin: 0, fontFamily: "var(--font-text)", fontSize: 24 * s, lineHeight: 1.5, color: "var(--body)", textWrap: "pretty" }}>{descripcion}</p>}
+      </div>
+    </div>
+  );
+}

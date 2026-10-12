@@ -1,0 +1,12 @@
+:root{
+/* Site radii */
+--radius-pill:999px;--radius-panel:28px;--radius-card:22px;--radius-card-mobile:18px;--radius-tile:18px;--radius-frame:16px;
+/* Ad radii on a 1080px canvas (site × 1.75) */
+--ad-radius-panel:49px;--ad-radius-card:38px;--ad-radius-tile:32px;--ad-radius-frame:28px;
+--border-width:1px;
+/* The only shadow on the site (card hover). No hard shadows, no glows. */
+--shadow-card-hover:0 16px 34px -22px rgba(34,52,58,0.4);
+/* Buttons */
+--button-min-h-web:44px;--button-px-web:26px;--button-py-web:15px;
+--button-h-ad:84px;--button-px-ad:48px;
+}

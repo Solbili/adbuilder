@@ -1,0 +1,9 @@
+:root{
+/* Declared extension: the site gives no spacing scale; this is the ad scale on a 1080px canvas */
+--space-1:8px;--space-2:16px;--space-3:24px;--space-4:32px;--space-5:44px;--space-6:56px;--space-7:72px;--space-8:96px;
+--ad-margin:72px;
+/* Safe zones (9:16) */
+--safe-stories-top:250px;--safe-stories-bottom:250px;--safe-reels-top:250px;--safe-reels-bottom:420px;
+/* Logo */
+--logo-min-ad:48px;--logo-gap-ratio:0.31;
+}

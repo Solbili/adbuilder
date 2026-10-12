@@ -1,0 +1,13 @@
+import React from "react";
+
+/** Legal line: dental director + license, razón social, promo conditions. Required on every ad. */
+export function LegalStrip({ director = "{director}", matricula = "{matrícula}", extra, tone = "light", s = 1, align = "left", style }) {
+  const color = tone === "dark" ? "var(--dark-body)" : "var(--muted2)";
+  const fs = Math.max(13, 18 * s);
+  return (
+    <div style={{ fontFamily: "var(--font-text)", fontSize: fs, lineHeight: 1.4, color, textAlign: align, display: "flex", flexDirection: "column", gap: 2 * s, minWidth: 0, ...style }}>
+      <span>Smile Lab Odontología · Director odontológico: {director} · M.P. {matricula}</span>
+      {extra && <span>{extra}</span>}
+    </div>
+  );
+}

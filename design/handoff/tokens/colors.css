@@ -1,0 +1,26 @@
+:root{
+/* Base */
+--bg:#f6fafa;--surface:#ffffff;--line:#e6f1f1;--line-strong:#d4e8e9;--photo:#cfe6e6;
+/* Ink */
+--ink:#22343a;--body:#51666b;--muted2:#5d7075;
+/* Accent family */
+--accent:#8cc3c8;--accent-hover:#6fb0b7;--accent-soft:#bfdfe0;--accent-deep:#a9d3d5;--accent-ink:#3c757c;--accent-italic:#4d9199;--on-accent:#1b2c31;
+/* Dark band */
+--dark:#22343a;--dark-deep:#0f1d21;--dark-body:#b9cbce;--dark-line3:#46595f;
+/* Brand (logo only) */
+--brand:#327180;--brand-light:#afd1d3;
+/* Veil over photo (#22343a at 35–55%) */
+--veil-rgb:34,52,58; /* @kind other */
+--veil-min:.35; /* @kind other */
+--veil-max:.55; /* @kind other */
+
+--veil:linear-gradient(180deg,rgba(var(--veil-rgb),var(--veil-min)) 0%,rgba(var(--veil-rgb),var(--veil-max)) 100%);
+
+/* Semantic aliases */
+--surface-canvas:var(--bg);--surface-card:var(--surface);--surface-placeholder:var(--photo);--surface-block:var(--accent);--surface-block-soft:var(--accent-soft);--surface-dark:var(--dark);
+--text-heading:var(--ink);--text-body:var(--body);--text-meta:var(--muted2);--text-kicker:var(--accent-ink);--text-link:var(--accent-ink);--text-italic:var(--accent-italic);--text-on-accent:var(--on-accent);
+--text-on-dark:#ffffff;--text-body-on-dark:var(--dark-body);--text-kicker-on-dark:var(--accent);--text-italic-on-dark:var(--accent);
+--border-card:var(--line);--border-button:var(--line-strong);--border-on-dark:var(--dark-line3);
+--button-primary-bg:var(--accent);--button-primary-bg-hover:var(--accent-hover);--button-primary-fg:var(--on-accent);
+--button-dark-bg:var(--dark);--button-dark-bg-hover:var(--dark-deep);
+}

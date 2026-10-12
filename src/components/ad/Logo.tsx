@@ -1,0 +1,40 @@
+import type { CSSProperties } from "react";
+
+const RATIO = 100 / 98.48;
+
+export interface LogoProps {
+  /** lockup = symbol + wordmark side by side; symbol = mark only; stacked = wordmark under symbol */
+  variant?: "lockup" | "symbol" | "stacked";
+  /** Symbol height in px. Min 48 on a 1080 canvas. Default 48 */
+  size?: number;
+  /** light = ink wordmark (for #f6fafa / #fff); dark = white wordmark (for #22343a) */
+  tone?: "light" | "dark";
+  style?: CSSProperties;
+}
+
+/** Smile Lab logo. Symbol proportions are fixed at 100:98.48. */
+export function Logo({ variant = "lockup", size = 48, tone = "light", style }: LogoProps) {
+  const w = size * RATIO;
+  const sym = (
+    <svg width={w} height={size} viewBox="0 0 100 98.48" role="img" aria-label="Smile Lab" style={{ display: "block", flex: "none" }}>
+      <path fill="var(--brand-light)" d="M21.24 0L78.76 0C91.39 1.49 100 10.97 100 23.57C99.67 33.81 96.01 44.03 92.48 53.49C87.75 65.47 82.16 77.27 76.05 88.53C73.62 92.92 70.34 97.74 64.81 98.45C58.32 98.88 53.67 94.5 50 89.61C46.33 94.5 41.68 98.88 35.19 98.45C29.66 97.74 26.38 92.92 23.95 88.53C17.84 77.27 12.25 65.47 7.52 53.49C3.99 44.03 0.33 33.81 0 23.57C0 10.97 8.61 1.49 21.24 0Z" />
+      <path fill="var(--brand)" d="M21.24 0L78.76 0C80.97 0 82.83 1.29 84.34 3.88L98.76 28.68C99.69 30.75 99.28 32.92 97.52 35.2L51.47 87.6C50.74 88.43 50.25 88.84 50 88.84C49.75 88.84 49.26 88.43 48.53 87.6L2.48 35.2C0.72 32.92 0.31 30.75 1.24 28.68L15.66 3.88C17.17 1.29 19.03 0 21.24 0Z" />
+    </svg>
+  );
+  if (variant === "symbol") return <span style={{ display: "inline-flex", ...style }}>{sym}</span>;
+  const color = tone === "dark" ? "#ffffff" : "var(--ink)";
+  const fs = size * 0.43;
+  const word: CSSProperties = { fontFamily: "var(--font-display)", fontWeight: 400, lineHeight: 1, color, whiteSpace: "nowrap", display: "block" };
+  const words = (
+    <span style={{ display: "flex", flexDirection: "column", gap: fs * 0.34, alignItems: variant === "stacked" ? "center" : "flex-start" }}>
+      <span style={{ ...word, fontSize: fs, letterSpacing: "0.2em", marginRight: "-0.2em" }}>SMILE LAB</span>
+      <span style={{ ...word, fontSize: fs * 0.5, letterSpacing: "0.3em", marginRight: "-0.3em" }}>ODONTOLOGÍA</span>
+    </span>
+  );
+  return (
+    <span style={{ display: "inline-flex", flexDirection: variant === "stacked" ? "column" : "row", alignItems: "center", gap: variant === "stacked" ? size * 0.3 : size * (13 / 42), ...style }}>
+      {sym}
+      {words}
+    </span>
+  );
+}
