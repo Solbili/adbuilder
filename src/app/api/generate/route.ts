@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { getMember } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { generateSpec, GenerateError, type GenerateEvent } from "@/lib/generate";
 import type { AdRow, PhotoRow, SettingsRow } from "@/lib/spec";
 
@@ -17,9 +17,7 @@ function friendly(err: unknown) {
 }
 
 export async function POST(req: Request) {
-  const { supabase, user, member } = await getMember();
-  if (!user) return Response.json({ error: "No autenticado" }, { status: 401 });
-  if (!member) return Response.json({ error: "Tu cuenta no tiene acceso al estudio" }, { status: 403 });
+  const supabase = await createClient();
 
   const body = (await req.json().catch(() => null)) as { request?: unknown; parentId?: unknown } | null;
   const request = typeof body?.request === "string" ? body.request.trim().slice(0, 2000) : "";

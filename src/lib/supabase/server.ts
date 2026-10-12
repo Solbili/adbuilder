@@ -1,27 +1,11 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { connection } from "next/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
+/** No login: every request uses the publishable key, and RLS allows it. */
 export async function createClient() {
-  const cookieStore = await cookies();
-  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
-    cookies: {
-      getAll: () => cookieStore.getAll(),
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
-        } catch {
-          // Called from a Server Component: the proxy refreshes the session instead.
-        }
-      },
-    },
+  // Data changes all the time: render per request, never at build.
+  await connection();
+  return createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!, {
+    auth: { persistSession: false, autoRefreshToken: false },
   });
-}
-
-/** The signed-in user, if they are listed in public.members. */
-export async function getMember() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user?.email) return { supabase, user: null, member: false };
-  const { data } = await supabase.from("members").select("email").eq("email", user.email.toLowerCase()).maybeSingle();
-  return { supabase, user, member: !!data };
 }
