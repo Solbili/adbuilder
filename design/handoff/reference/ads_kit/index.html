@@ -1,0 +1,50 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Smile Lab · Plantillas por formato</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script><script src="../../assets/ds-fallback.js"></script>
+<style>html,body{margin:0}body{background:var(--bg);font-family:var(--font-text);color:var(--ink)}*{box-sizing:border-box}a{color:var(--accent-ink)}a:hover{color:var(--ink)}</style></head><body><div id="root"></div>
+<script type="text/babel" src="kit.jsx"></script>
+<script type="text/babel">
+const LAYOUTS = [["veil","Foto + velo"],["split","Split 50/50"],["flat","Fondo plano"],["dark","Banda oscura"]];
+const GROUPS = { meta: ["meta-feed-1x1","meta-feed-4x5","meta-stories","meta-reels"], google: ["google-display-191x1","google-display-1x1","google-display-4x5","google-demandgen-9x16","google-logo-1x1","google-logo-4x1"] };
+function App() {
+  const saved = JSON.parse(localStorage.getItem("sl-kit") || "{}");
+  const [preset, setPreset] = React.useState(saved.preset || "vacio");
+  const [layout, setLayout] = React.useState(saved.layout || "veil");
+  const [group, setGroup] = React.useState(saved.group || "meta");
+  const [guides, setGuides] = React.useState(saved.guides ?? true);
+  React.useEffect(() => localStorage.setItem("sl-kit", JSON.stringify({ preset, layout, group, guides })), [preset, layout, group, guides]);
+  const p = PRESETS[preset];
+  const list = group === "all" ? [...GROUPS.meta, ...GROUPS.google] : GROUPS[group];
+  return (
+    <div>
+      <KitNav current="index.html" />
+      <div style={{ padding: "28px 32px", display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+          <Seg value={group} onChange={setGroup} options={[["meta","Meta"],["google","Google Ads"],["all","Todos"]]} />
+          <Seg value={layout} onChange={setLayout} options={LAYOUTS} />
+          <Seg value={preset} onChange={setPreset} options={Object.entries(PRESETS).map(([k,v]) => [k, v.name])} />
+          <label style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 14, color: "var(--body)", cursor: "pointer" }}><input type="checkbox" checked={guides} onChange={e => setGuides(e.target.checked)} /> Zonas seguras</label>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 28, alignItems: "flex-start" }}>
+          {list.map(fk => {
+            const f = DS.AD_FORMATS[fk];
+            const k = Math.min(420 / f.h, 520 / f.w);
+            return (
+              <div key={fk} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <Scaled format={fk} k={k}><DS.AdTemplate format={fk} layout={layout} {...p.slots} showGuides={guides} /></Scaled>
+                <div style={{ display: "flex", justifyContent: "space-between", gap: 12, fontSize: 12 }}>
+                  <span style={{ fontWeight: 600 }}>{f.label}</span><span style={{ color: "var(--muted2)" }}>{f.w} × {f.h}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <p style={{ margin: 0, fontSize: 13, color: "var(--muted2)", maxWidth: 760, lineHeight: 1.6 }}>Slots: {"{titular}"} {"{tratamiento}"} {"{foto}"} {"{sede}"} {"{cta}"} {"{legales}"}. Las fotos son placeholders con su punto focal: la misma foto + foco genera los recortes 1:1, 4:5 y 9:16 para Performance Max.</p>
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script></body></html>

@@ -1,0 +1,18 @@
+{
+  "brand": "Smile Lab",
+  "razonSocial": "Smile Lab Odontología",
+  "tagline": "Odontología clara y cercana en Córdoba.",
+  "instagram": "@smilelabargentina",
+  "since": 2019,
+  "horarios": "Lun a Vie 9–19 · Sáb 9–13 · Dom cerrado",
+  "sedes": {
+    "general-paz": { "nombre": "General Paz", "direccion": "Gral. Román Deheza 158", "whatsapp": "+54 351 688-6431", "waLink": "https://wa.me/543516886431" },
+    "nueva-cordoba": { "nombre": "Nueva Córdoba", "direccion": "Av. Ambrosio Olmos 782", "whatsapp": "+54 9 351 258-4060", "waLink": "https://wa.me/5493512584060" }
+  },
+  "tratamientos": ["Limpieza dental", "Endodoncia", "Caries y restauraciones", "Ortodoncia", "Blanqueamiento", "Odontopediatría"],
+  "ctas": ["Sacar turno", "Consultar por WhatsApp", "Ver tratamientos"],
+  "legal": { "director": "{director}", "matricula": "{matrícula}", "note": "Confirm exact wording with the Colegio Odontológico de Córdoba. Editable in Settings." },
+  "limits": { "metaPrimaryText": 125, "metaHeadline": 40, "metaDescription": 30, "googleHeadline": 30, "googleLongHeadline": 90, "googleDescription": 90, "reelCaption": 2200 },
+  "bannedPatterns": ["!", "¡", "sonrisa perfecta", "perfect", "garantiz", "sin dolor", "transform", "premium", "lujo", "reserva tu cita", "agenda tu consulta", "coordina tu", "elige ", "consulta por whatsapp", "% off", "últimos días", "solo por hoy"],
+  "voseoHints": { "coordina": "coordiná", "elige": "elegí", "saca": "sacá", "consulta": "consultá", "reserva": "reservá", "agenda": "agendá", "pide": "pedí", "escribe": "escribí" }
+}

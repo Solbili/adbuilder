@@ -1,0 +1,7 @@
+[
+  { "id": "endo-aislacion-01", "file": "photos/endo-aislacion-01.jpg", "treatments": ["Endodoncia", "Caries y restauraciones"], "tags": ["aislación absoluta", "tratamiento"], "focal": "52% 44%", "alt": "Tratamiento con aislación absoluta", "approved": true },
+  { "id": "brackets-02", "file": "photos/brackets-02.jpg", "treatments": ["Ortodoncia"], "tags": ["brackets", "tratamiento"], "focal": "55% 45%", "alt": "Brackets", "approved": true },
+  { "id": "limpieza-01", "file": "photos/limpieza-01.jpg", "treatments": ["Limpieza dental"], "tags": ["equipo", "consultorio"], "focal": "50% 40%", "alt": "Profesional en el consultorio", "approved": true },
+  { "id": "pediatria-01", "file": "photos/pediatria-01.jpg", "treatments": ["Odontopediatría"], "tags": ["consultorio"], "focal": "50% 45%", "alt": "Consultorio", "approved": true },
+  { "id": "recepcion-01", "file": "photos/recepcion-01.jpg", "treatments": ["General"], "tags": ["recepción", "sede"], "focal": "45% 50%", "alt": "Recepción", "approved": true }
+]

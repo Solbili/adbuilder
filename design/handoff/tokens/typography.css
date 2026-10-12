@@ -1,0 +1,16 @@
+:root{
+--font-display:"Jost",system-ui,sans-serif;
+--font-text:"Hanken Grotesk",system-ui,sans-serif;
+--weight-light:300;--weight-regular:400;--weight-medium:500;--weight-semibold:600;
+/* Site roles */
+--h1-weight:300;--h1-tracking:-0.02em;--h1-leading:1.08;
+--h2-weight:300;--h2-tracking:-0.005em;--h2-leading:1.15;
+--h3-weight:400;--h3-tracking:0;--h3-leading:1.25;
+--kicker-weight:400;--kicker-tracking:0.24em;--kicker-leading:1;
+--body-weight:400;--body-leading:1.7;
+--button-weight:600;--button-leading:1;
+--wordmark-tracking:0.2em;--wordmark-sub-tracking:0.3em;
+/* Ad sizes on a 1080px canvas (scale with canvas) */
+--ad-h1:84px;--ad-h1-min:72px;--ad-h1-flat:100px;--ad-h2:56px;--ad-h3:40px;
+--ad-kicker:22px;--ad-body:30px;--ad-body-leading:1.45;--ad-button:30px;--ad-meta:24px;--ad-legal:18px;
+}
